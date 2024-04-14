@@ -11,9 +11,13 @@ dotenv.config();
 var mongoUrl = process.env.MONGO_URL;
 mongoose.set("strictQuery", true);
 mongoose
-    .connect(mongoUrl || "")
-    .then(function () { return console.log("Database connected!"); })
-    .catch(function (err) { return console.log(err); });
+  .connect(mongoUrl || "")
+  .then(function () {
+    return console.log("Database connected!");
+  })
+  .catch(function (err) {
+    return console.log(err);
+  });
 //   middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -23,5 +27,5 @@ app.use(morgan("common"));
 app.use(router);
 // listen to the server
 app.listen(process.env.PORT || 8070, function () {
-    console.log("Server is running on port 8070.");
+  console.log("Server is running on port 8070.");
 });
