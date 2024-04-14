@@ -1,10 +1,10 @@
-import express from "express";
+const express = require("express");
 const app = express();
-import mongoose from "mongoose";
-import cors from "cors";
-import helmet from "helmet";
-import morgan from "morgan";
-import dotenv from "dotenv";
+const mongoose = require("mongoose");
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const dotenv = require("dotenv");
 const router = require("./routes/index");
 
 dotenv.config();
@@ -16,7 +16,7 @@ mongoose.set("strictQuery", true);
 mongoose
   .connect(mongoUrl || "")
   .then(() => console.log("Database connected!"))
-  .catch((err) => console.log(err));
+  .catch((err: any) => console.log(err));
 
 //   middlewares
 app.use(express.json());
