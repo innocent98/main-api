@@ -1,6 +1,10 @@
 import User from "../models/User";
-import { singleUser, userInfo } from "../utils/interfaces";
-// import { User } from "../utils/models";
+
+// find all users
+const findUsersService = async () => {
+  const users = await User.find();
+  return users;
+};
 
 // find a user
 const findOneUserService = async (userInfo: object) => {
@@ -8,7 +12,7 @@ const findOneUserService = async (userInfo: object) => {
   return user;
 };
 
-const findUserByIdServerice = async (userId: String) => {
+const findUserByIdService = async (userId: String) => {
   const user = await User.findById(userId);
   return user;
 };
@@ -23,6 +27,11 @@ const findUserAndUpdate = async (userId: String, userInfo: object) => {
   return user;
 };
 
-export { findOneUserService, findUserByIdServerice, findUserAndUpdate };
+export {
+  findUsersService,
+  findOneUserService,
+  findUserByIdService,
+  findUserAndUpdate,
+};
 
 // module.exports = { findOneUserService };

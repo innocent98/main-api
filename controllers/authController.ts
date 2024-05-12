@@ -4,7 +4,7 @@ import { registerUserService } from "../services/authService";
 import {
   findOneUserService,
   findUserAndUpdate,
-  findUserByIdServerice,
+  findUserByIdService,
 } from "../services/userService";
 import { jwt } from "../utils/jwt";
 import {
@@ -44,6 +44,7 @@ import { forgotPasswordEmail } from "../configs/forgot_password";
 // }
 
 // register a user
+
 const registerUserController = async (req: any, res: any) => {
   try {
     // encrypt password
@@ -55,7 +56,7 @@ const registerUserController = async (req: any, res: any) => {
     });
 
     if (findUser) {
-      res.status(400).json(existingUser);
+      res.status(400).json({ message: existingUser });
     } else {
       const newUser = await registerUserService({
         firstName: req.body.firstName,
@@ -197,7 +198,7 @@ const resetPassword = async (req: any, res: any) => {
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
   try {
-    const findUser = await findUserByIdServerice(req.user.id);
+    const findUser = await findUserByIdService(req.user.id);
 
     if (findUser) {
       await findUserAndUpdate(findUser.id, {
@@ -216,7 +217,7 @@ const resetPassword = async (req: any, res: any) => {
 
 const verifyEmail = async (req: any, res: any) => {
   try {
-    const user = await findUserByIdServerice(req.user.id);
+    const user = await findUserByIdService(req.user.id);
 
     if (user && !user.isEmailVerified) {
       await user.updateOne({ $set: { isEmailVerified: true } });

@@ -6,10 +6,6 @@ export interface userReg {
   userRole: String;
 }
 
-export interface singleUser {
-  params: String;
-}
-
 export interface userInfo {
   _id: String;
   firstName: String;
@@ -18,4 +14,24 @@ export interface userInfo {
   password: String;
   userRole: String;
   isEmailVerified: boolean;
+}
+
+export enum jobStatus {
+  Pending = "pending",
+  Published = "published",
+}
+
+export interface jobReg {
+  jobPoster: string;
+  jobCategory: string;
+  serviceType: string;
+  jobTitle: string;
+  jobDesc: string;
+  requiredSkills: string;
+  noToHire: number;
+  budget: number;
+  country: string;
+  startDate: Date;
+  duration: string;
+  status: jobStatus;
 }

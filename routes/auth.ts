@@ -1,5 +1,3 @@
-const router = require("express").Router();
-
 import {
   confirmPasswordCode,
   forgotPasswordController,
@@ -9,6 +7,8 @@ import {
   verifyEmail,
 } from "../controllers/authController";
 import { verifyTokenAndAuthorization } from "../utils/jwt";
+
+const router = require("express").Router();
 
 router.post("/register", registerUserController);
 
