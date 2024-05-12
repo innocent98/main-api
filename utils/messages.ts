@@ -32,3 +32,11 @@ export const reset_password =
 
 export const reset_code_exps =
   "This code is has been expired or not valid, please generate another code for verification.";
+
+export const not_found = "Not found";
+
+export const account_updated = "Profile successfully updated";
+
+export const job_posted = "Job successfully submitted and currently in review.";
+
+export const not_allowed = "You are not allowed to perform this operation.";
