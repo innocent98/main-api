@@ -34,7 +34,7 @@ export const confirmationEmail = async (email: String, token: String) => {
     
       <p style="margin-bottom: 10px;">To complete your registration, please verify your email address by clicking the link below:</p>
     
-      <a href="https://zealworkers.com/account/verify?verify=${token}" style="color: #007bff;">Verify your email address</a>
+      <a href="https://zeal.zealworkers.com/verified?verify=${token}" style="color: #007bff;">Verify your email address</a>
 
       <p style="margin-bottom: 10px;">Link expires in 10 mins.</p>
     
