@@ -32,5 +32,5 @@ jobs:
             cd zealworkers/main-api/
             git pull origin main
             git status
-            npm install --omit=dev
+            npm install
             sudo systemctl reload nginx
