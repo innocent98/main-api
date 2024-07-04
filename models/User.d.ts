@@ -7,7 +7,7 @@ export enum UserRole {
   Freelancer = "freelancer",
 }
 
-interface User {
+type User = {
   firstName: string;
   lastName: string;
   email: string;
@@ -25,18 +25,18 @@ interface User {
   zip?: string;
   phone?: string;
   hourRate?: number;
+  myWorks?: Array<object>;
   companyLogo?: string;
   companyName?: string;
   companyDesc?: string;
   companyInterests?: Array<string>;
   companyLinks?: Array<string>;
-}
+  availableBalance?: number;
+  cryptoBalance?: number;
+  walletAddress?: string;
+};
 
-interface UserModel extends Model<User> {
-  // [x: string]: any;
-  // findOneUser(userInfo: any): Promise<User | null>;
-  // Define other custom methods if needed
-}
+type UserModel = Model<User>;
 
 declare const User: UserModel;
 

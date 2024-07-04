@@ -7,7 +7,7 @@ export enum JobStatus {
   Published = "published",
 }
 
-interface Job {
+type Job = {
   jobPoster: string;
   jobCategory: string;
   serviceType: string;
@@ -20,9 +20,9 @@ interface Job {
   startDate: Date;
   duration: string;
   status: JobStatus;
-}
+};
 
-interface JobModel extends Model<Job> {}
+type JobModel = Model<Job>;
 
 declare const Job: JobModel;
 

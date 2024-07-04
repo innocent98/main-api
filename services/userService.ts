@@ -1,4 +1,5 @@
 import User from "../models/User";
+import { prohibitedPhrases } from "../utils/prohibitedPhrases";
 
 // find all users
 const findUsersService = async () => {
@@ -17,14 +18,15 @@ const findUserByIdService = async (userId: String) => {
   return user;
 };
 
-const findUserAndUpdate = async (userId: String, userInfo: object) => {
-  const user = await User.findByIdAndUpdate(
+const findUserAndUpdate = async (userId: String, userInfo: any) => {
+  // Update the user's information
+  const updatedUser = await User.findByIdAndUpdate(
     userId,
     { $set: userInfo },
     { new: true }
   );
 
-  return user;
+  return updatedUser;
 };
 
 export {

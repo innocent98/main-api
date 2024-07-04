@@ -40,3 +40,5 @@ export const account_updated = "Profile successfully updated";
 export const job_posted = "Job successfully submitted and currently in review.";
 
 export const not_allowed = "You are not allowed to perform this operation.";
+
+export const prohibited_content = "Prohibited content was discovered! Please remove and try again"

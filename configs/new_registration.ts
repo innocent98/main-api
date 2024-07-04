@@ -40,7 +40,7 @@ export const confirmationEmail = async (email: String, token: String) => {
     
       <p style="margin-bottom: 10px;">Once you have verified your email address, you will be able to log in to your account and start enjoying all the benefits of being a Zeal Workers Token member.</p>
     
-      <p style="margin-bottom: 10px;">If you have any questions, please don't hesitate to contact us at [Support Email Address].</p>
+      <p style="margin-bottom: 10px;">If you have any questions, please don't hesitate to contact us at ${process.env.EMAIL_USER}.</p>
     
       <p style="margin-bottom: 10px;">Thanks,</p>
       <p style="margin-bottom: 10px;">Zeal Workers Token Team</p>

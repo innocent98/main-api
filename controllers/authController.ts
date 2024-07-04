@@ -20,7 +20,6 @@ import {
   userNotFound,
   verify_email,
 } from "../utils/messages";
-import crypto from "crypto";
 
 import bcrypt from "bcrypt";
 import { forgotPasswordEmail } from "../configs/forgot_password";

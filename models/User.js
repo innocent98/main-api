@@ -1,4 +1,11 @@
 const mongoose = require("mongoose");
+const { prohibitedPhrases } = require("../utils/prohibitedPhrases");
+
+const WorkSchema = new mongoose.Schema({
+  img: { type: String, required: true },
+  projName: { type: String, required: true },
+  projDesc: { type: String, required: true },
+});
 
 const UserSchema = new mongoose.Schema(
   {
@@ -11,7 +18,15 @@ const UserSchema = new mongoose.Schema(
     resetCode: { type: String },
     resetCodeExpIn: { type: Date },
     gender: { type: String, enum: ["male", "female"] },
-    bio: { type: String },
+    bio: {
+      type: String,
+      validate: {
+        validator: function (v) {
+          return !prohibitedPhrases.some((pattern) => pattern.test(v));
+        },
+        message: (props) => `Bio contains prohibited content: ${props.value}`,
+      },
+    },
     skills: { type: Array },
     photo: { type: String },
     country: { type: String },
@@ -19,11 +34,15 @@ const UserSchema = new mongoose.Schema(
     zip: { type: String },
     phone: { type: String },
     hourRate: { type: Number },
+    myWorks: { type: [WorkSchema], default: [] },
     companyLogo: { type: String },
     companyName: { type: String },
     companyDesc: { type: String },
-    companyInterests: { type: Array },
-    companyLinks: { type: Array },
+    companyInterests: { type: [String] },
+    companyLinks: { type: [String] },
+    availableBalance: { type: Number },
+    cryptoBalance: { type: Number },
+    walletAddress: { type: String },
   },
   { timestamps: true }
 );

@@ -35,3 +35,28 @@ export interface jobReg {
   duration: string;
   status: jobStatus;
 }
+
+export enum TransactionType {
+  Withdraw = "withdraw",
+  Fund = "fund",
+  Transfer = "transfer",
+}
+
+export enum CurrencyType {
+  Currency = "currency",
+  Crypto = "crypto",
+}
+
+export enum TransactionStatus {
+  Pending = "pending",
+  Completed = "completed",
+  Rejected = "rejected",
+}
+
+export interface transaction {
+  user: string;
+  transactionType: TransactionType;
+  currencyType: CurrencyType;
+  transactionStatus: TransactionStatus;
+  amount: number;
+}

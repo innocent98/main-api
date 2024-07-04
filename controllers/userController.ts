@@ -8,7 +8,9 @@ import {
   connectionError,
   not_allowed,
   not_found,
+  prohibited_content,
 } from "../utils/messages";
+import { prohibitedPhrases } from "../utils/prohibitedPhrases";
 
 // get user self account/profile
 const findUserController = async (req: any, res: any) => {
@@ -26,6 +28,7 @@ const findUserController = async (req: any, res: any) => {
           skills,
           photo,
           hourRate,
+          myWorks,
           ...others
         } = userObject;
 
@@ -59,6 +62,19 @@ const updateUserController = async (req: any, res: any) => {
     const user = await findUserByIdService(req.user.id);
 
     if (user) {
+      // Validate the updated bio before updating the user
+      const { bio } = req.body;
+
+      if (bio) {
+        const isValidBio = !prohibitedPhrases.some((pattern) =>
+          pattern.test(bio)
+        );
+        if (!isValidBio) {
+          res.status(400).json(prohibited_content);
+          return;
+        }
+      }
+
       const updateUser = await findUserAndUpdate(user.id, req.body);
 
       const userObject = updateUser?.toObject() as User;
