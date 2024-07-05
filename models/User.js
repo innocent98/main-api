@@ -40,9 +40,12 @@ const UserSchema = new mongoose.Schema(
     companyDesc: { type: String },
     companyInterests: { type: [String] },
     companyLinks: { type: [String] },
-    availableBalance: { type: Number },
-    cryptoBalance: { type: Number },
+    availableBalance: { type: Number, default: 0 },
+    cryptoBalance: { type: Number, default: 0 },
     walletAddress: { type: String },
+    walletAddressNetwork: { type: String },
+    bankName: { type: String },
+    accountNumber: { type: String },
   },
   { timestamps: true }
 );

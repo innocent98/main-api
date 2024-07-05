@@ -19,10 +19,15 @@ export enum TransactionStatus {
 
 type Transaction = {
   user: string;
+  user2: string;
   transactionType: TransactionType;
   currencyType: CurrencyType;
   transactionStatus: TransactionStatus;
   amount: number;
+  bankName: string;
+  accountName: string;
+  accountNumber: string;
+  wallet: string;
 };
 
 type TransactionModel = Model<Transaction>;

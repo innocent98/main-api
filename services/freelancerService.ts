@@ -24,6 +24,12 @@ const findFreelancerService = async (
       companyLinks: 0,
       phone: 0,
       zip: 0,
+      cryptoBalance: 0,
+      availableBalance: 0,
+      walletAddress: 0,
+      walletAddressNetwork: 0,
+      bankName: 0,
+      accountNumber: 0,
     })
     .skip((parseInt(page) - 1) * pageSize)
     .limit(pageSize)

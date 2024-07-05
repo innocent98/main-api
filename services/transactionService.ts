@@ -7,4 +7,19 @@ const fundBalanceService = async (transInfo: transaction) => {
   return savedBalance;
 };
 
-export { fundBalanceService };
+const getTransactionsService = async (
+  query: any,
+  page: string,
+  pageSize: number
+) => {
+  const transactions = await Transaction.find(query)
+    .sort({ createdAt: -1 })
+    .select({})
+    .skip((parseInt(page) - 1) * pageSize)
+    .limit(pageSize)
+    .exec();
+
+  return transactions;
+};
+
+export { fundBalanceService, getTransactionsService };

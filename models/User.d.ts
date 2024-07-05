@@ -31,9 +31,12 @@ type User = {
   companyDesc?: string;
   companyInterests?: Array<string>;
   companyLinks?: Array<string>;
-  availableBalance?: number;
-  cryptoBalance?: number;
+  availableBalance: number;
+  cryptoBalance: number;
   walletAddress?: string;
+  walletAddressNetwork?: string;
+  bankName?: string;
+  accountNumber?: string;
 };
 
 type UserModel = Model<User>;

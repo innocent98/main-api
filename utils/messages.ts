@@ -41,4 +41,12 @@ export const job_posted = "Job successfully submitted and currently in review.";
 
 export const not_allowed = "You are not allowed to perform this operation.";
 
-export const prohibited_content = "Prohibited content was discovered! Please remove and try again"
+export const prohibited_content =
+  "Prohibited content was discovered! Please remove and try again";
+
+export const transaction_success = "Transaction processed successfully.";
+
+export const insufficient_balance =
+  "Your balance is not sufficient to perform this operation.";
+
+  export const account_not_found = "The account you are making request to cannot be found"

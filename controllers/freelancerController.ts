@@ -22,6 +22,8 @@ const findFreelancerController = async (req: any, res: any) => {
 
       const pageSize = 10; // Number of items to return per page
 
+      // const firstQuery = user2
+
       const freelancers = await findFreelancerService({}, page, pageSize);
 
       // Convert 'query' to a string if it's not already a string
