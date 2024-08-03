@@ -2,9 +2,14 @@
 
 import { Document, Model } from "mongoose";
 
-export enum JobStatus {
+export enum Status {
   Pending = "pending",
   Published = "published",
+}
+
+export enum JobStatus {
+  Open = "open",
+  Closed = "closed",
 }
 
 type Job = {
@@ -19,7 +24,9 @@ type Job = {
   country: string;
   startDate: Date;
   duration: string;
-  status: JobStatus;
+  applicants: string[];
+  jobStatus: JobStatus;
+  status: Status;
 };
 
 type JobModel = Model<Job>;

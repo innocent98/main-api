@@ -49,4 +49,10 @@ export const transaction_success = "Transaction processed successfully.";
 export const insufficient_balance =
   "Your balance is not sufficient to perform this operation.";
 
-  export const account_not_found = "The account you are making request to cannot be found"
+export const account_not_found =
+  "The account you are making request to cannot be found";
+
+export const job_already_applied =
+  "You already applied for this job, please try other available jobs";
+
+export const job_applied = "You have successfully applied for this job.";
