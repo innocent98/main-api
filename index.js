@@ -1,15 +1,15 @@
-var express = require("express");
-var app = express();
-var mongoose = require("mongoose");
-var cors = require("cors");
-var helmet = require("helmet");
-var morgan = require("morgan");
-var dotenv = require("dotenv");
-var router = require("./routes/index");
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const dotenv = require("dotenv");
+const router = require("./routes/index");
 dotenv.config();
 
 // connect to database
-var mongoUrl = process.env.MONGO_URL;
+const mongoUrl = process.env.MONGO_URL;
 mongoose.set("strictQuery", true);
 mongoose
   .connect(mongoUrl || "")

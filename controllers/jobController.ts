@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import Job from "../models/Job";
 import {
   findJobByIdService,
@@ -7,6 +8,8 @@ import {
 import { findUserByIdService } from "../services/userService";
 import {
   connectionError,
+  job_already_applied,
+  job_applied,
   job_posted,
   not_allowed,
   not_found,
@@ -97,7 +100,11 @@ const findJobController = async (req: any, res: any) => {
       const job = await findJobByIdService(req.params.id);
 
       if (job) {
-        res.status(200).json({ data: job });
+        if (job.applicants.includes(user.id)) {
+          res.status(200).json({ data: job, message: job_already_applied });
+        } else {
+          res.status(200).json({ data: job, message: "" });
+        }
       } else {
         res.status(404).json({ message: not_found });
       }
@@ -109,4 +116,35 @@ const findJobController = async (req: any, res: any) => {
   }
 };
 
-export { newJobController, findJobsController, findJobController };
+const jobApplicationController = async (req: any, res: Response) => {
+  try {
+    const user = await findUserByIdService(req.user.id);
+
+    if (user) {
+      const job = await findJobByIdService(req.params.id);
+
+      if (job) {
+        if (!job.applicants.includes(user.id)) {
+          await job.updateOne({ $push: { applicants: user.id } });
+
+          res.status(200).json({ message: job_applied });
+        } else {
+          res.status(200).json({ message: job_already_applied });
+        }
+      } else {
+        res.status(404).json({ message: not_found });
+      }
+    } else {
+      res.status(403).json({ message: not_allowed });
+    }
+  } catch (err) {
+    res.status(500).json({ message: connectionError });
+  }
+};
+
+export {
+  newJobController,
+  findJobsController,
+  findJobController,
+  jobApplicationController,
+};
