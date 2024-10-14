@@ -13,6 +13,8 @@ const JobSchema = new mongoose.Schema(
     country: { type: String, required: true },
     startDate: { type: Date, required: true },
     duration: { type: String, required: true },
+    applicants: { type: Array },
+    jobStatus: { type: String, enum: ["open", "closed"], default: "open" },
     status: {
       type: String,
       enum: ["pending", "published"],
