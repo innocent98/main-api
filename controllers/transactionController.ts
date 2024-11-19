@@ -12,6 +12,8 @@ import {
   not_allowed,
   not_found,
   transaction_success,
+  unknown_currency_type,
+  unknown_transaction_type,
 } from "../utils/messages";
 
 type Filter = {
@@ -57,6 +59,8 @@ const fundBalanceFunction = async (
     if (req.body.currencyType === "crypto") {
       await user.updateOne({ $inc: { cryptoBalance: -req.body.amount } });
     }
+
+    // return res.status(400).json({ message: unknown_currency_type });
   }
 
   if (req.body.transactionType === "fund") {
@@ -67,6 +71,8 @@ const fundBalanceFunction = async (
     if (req.body.currencyType === "crypto") {
       await user.updateOne({ $inc: { cryptoBalance: +req.body.amount } });
     }
+
+    // return res.status(400).json({ message: unknown_currency_type });
   }
 
   if (req.body.transactionType === "transfer") {
@@ -79,6 +85,8 @@ const fundBalanceFunction = async (
     if (req.body.currencyType === "crypto") {
       await transferTo.updateOne({ $inc: { cryptoBalance: +req.body.amount } });
     }
+
+    // return res.status(400).json({ message: unknown_currency_type });
   }
 
   res.status(200).json({ message: transaction_success, data: newTransaction });
@@ -92,34 +100,39 @@ const fundBalanceController = async (req: any, res: any) => {
       if (req.body.transactionType === "withdraw") {
         if (req.body.currencyType === "currency") {
           if (user.availableBalance < req.body.amount) {
-            res.status(400).json({ message: insufficient_balance });
+            return res.status(400).json({ message: insufficient_balance });
           } else {
-            fundBalanceFunction(user, null, req, res);
+            return fundBalanceFunction(user, null, req, res);
           }
         }
 
         if (req.body.currencyType === "crypto") {
           if (user.cryptoBalance < req.body.amount) {
-            res.status(400).json({ message: insufficient_balance });
+            return res.status(400).json({ message: insufficient_balance });
           } else {
-            fundBalanceFunction(user, null, req, res);
+            return fundBalanceFunction(user, null, req, res);
           }
         }
+
+        return res.status(400).json({ message: unknown_currency_type });
       }
 
       if (req.body.transactionType === "fund") {
-        fundBalanceFunction(user, null, req, res);
+        return fundBalanceFunction(user, null, req, res);
       }
 
       if (req.body.transactionType === "transfer") {
         const transferTo = await findUserByIdService(req.query.transferTo);
+        console.log(transferTo);
 
         if (transferTo) {
-          fundBalanceFunction(user, transferTo, req, res);
+          return fundBalanceFunction(user, transferTo, req, res);
         } else {
-          res.status(404).json({ message: account_not_found });
+          return res.status(404).json({ message: account_not_found });
         }
       }
+
+      return res.status(400).json({ message: unknown_transaction_type });
     } else {
       res.status(403).json({ message: not_allowed });
     }

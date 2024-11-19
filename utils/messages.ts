@@ -56,3 +56,7 @@ export const job_already_applied =
   "You already applied for this job, please try other available jobs";
 
 export const job_applied = "You have successfully applied for this job.";
+
+export const unknown_transaction_type = "Unknown transaction type";
+
+export const unknown_currency_type = "Unknown currency type";
