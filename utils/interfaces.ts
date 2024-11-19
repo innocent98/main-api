@@ -60,3 +60,9 @@ export interface transaction {
   transactionStatus: TransactionStatus;
   amount: number;
 }
+
+export type message = {
+  sender: string;
+  receiver: string;
+  content: string;
+}

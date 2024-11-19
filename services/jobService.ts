@@ -20,9 +20,7 @@ const findJobsService = async (query: any, page: string, pageSize: number) => {
 };
 
 const findJobByIdService = async (query: any) => {
-  const job = await Job.findById(query)
-    .select({ jobPoster: 0, updatedAt: 0 })
-    .exec();
+  const job = await Job.findById(query).select({ updatedAt: 0 }).exec();
 
   return job;
 };

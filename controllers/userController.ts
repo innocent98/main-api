@@ -62,9 +62,9 @@ const updateUserController = async (req: any, res: any) => {
     const user = await findUserByIdService(req.user.id);
 
     if (user) {
-      // Validate the updated bio before updating the user
       const { bio } = req.body;
 
+      // Validate the updated bio before updating the user
       if (bio) {
         const isValidBio = !prohibitedPhrases.some((pattern) =>
           pattern.test(bio)

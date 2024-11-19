@@ -15,18 +15,18 @@ export enum JobStatus {
 type Job = {
   jobPoster: string;
   jobCategory: string;
-  serviceType: string;
+  // serviceType: string;
   jobTitle: string;
   jobDesc: string;
-  requiredSkills: string;
-  noToHire: number;
+  // requiredSkills: string;
+  // noToHire: number;
   budget: number;
-  country: string;
-  startDate: Date;
+  // country: string;
+  // startDate: Date;
   duration: string;
   applicants: string[];
   jobStatus: JobStatus;
-  status: Status;
+  // status: Status;
 };
 
 type JobModel = Model<Job>;

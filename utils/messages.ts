@@ -22,7 +22,7 @@ export const userNotFound =
   "Account with email not found, try registering a new account.";
 
 export const incorrectCredentials =
-  "The login details you input is not correct, kindly try again or register a bew account.";
+  "The login details you input is not correct, kindly try again or register a new account.";
 
 export const forgotPassword =
   "Kindly check your email for a confirmation code to reset your password. Code expires in 5 mins";
@@ -37,7 +37,7 @@ export const not_found = "Not found";
 
 export const account_updated = "Profile successfully updated";
 
-export const job_posted = "Job successfully submitted and currently in review.";
+export const job_posted = "Job created successfully.";
 
 export const not_allowed = "You are not allowed to perform this operation.";
 

@@ -1,3 +1,4 @@
+import { Response } from "express";
 import User from "../models/User";
 import { findFreelancerService } from "../services/freelancerService";
 import { findUserByIdService } from "../services/userService";
@@ -12,7 +13,7 @@ type Filter = {
   >;
 };
 
-const findFreelancerController = async (req: any, res: any) => {
+const findFreelancerController = async (req: any, res: Response) => {
   try {
     const user = await findUserByIdService(req.user.id);
 
