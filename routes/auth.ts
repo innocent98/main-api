@@ -4,6 +4,7 @@ import {
   loginUserController,
   registerUserController,
   resetPassword,
+  socialSignInController,
   verifyEmail,
 } from "../controllers/authController";
 import { verifyTokenAndAuthorization } from "../utils/jwt";
@@ -13,6 +14,8 @@ const router = require("express").Router();
 router.post("/register", registerUserController);
 
 router.post("/login", loginUserController);
+
+router.post("/social-login", socialSignInController);
 
 router.post("/forgot-password", forgotPasswordController);
 

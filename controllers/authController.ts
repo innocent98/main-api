@@ -15,6 +15,7 @@ import {
   existingUser,
   forgotPassword,
   incorrectCredentials,
+  not_allowed,
   reset_code_exps,
   reset_password,
   userNotFound,
@@ -23,6 +24,7 @@ import {
 
 import bcrypt from "bcrypt";
 import { forgotPasswordEmail } from "../configs/forgot_password";
+import { Response } from "express";
 
 // async function generateUniqueReferralCode() {
 //   let referralCode;
@@ -63,6 +65,7 @@ const registerUserController = async (req: any, res: any) => {
         email: req.body.email,
         password: hashedPassword,
         userRole: req.body.userRole,
+        signinType: "custom",
       });
 
       // Convert Mongoose document to plain JavaScript object
@@ -126,6 +129,53 @@ const loginUserController = async (req: any, res: any) => {
       res.status(400).json({ message: incorrectCredentials });
     }
   } catch (err) {
+    res.status(500).json({ message: connectionError });
+  }
+};
+
+// social sign in
+const socialSignInController = async (req: any, res: Response) => {
+  try {
+    const { email, type } = req.body;
+
+    if (type && type === "google") {
+      const findUser = await findOneUserService({ email });
+
+      if (findUser) {
+        const accessToken = jwt.sign(
+          { id: findUser._id, email: findUser.email },
+          process.env.JWT_SEC || "",
+          {
+            expiresIn: "30d",
+          }
+        );
+
+        res.status(200).json({ data: accessToken });
+      } else {
+        const newUser = await registerUserService({
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          email: req.body.email,
+          password: "social",
+          userRole: req.body.userRole,
+          signinType: type,
+        });
+
+        const accessToken = jwt.sign(
+          { id: newUser._id, email: newUser.email },
+          process.env.JWT_SEC || "",
+          {
+            expiresIn: "30d",
+          }
+        );
+
+        res.status(200).json({ data: accessToken });
+      }
+    } else {
+      res.status(400).json({ message: not_allowed });
+    }
+  } catch (err) {
+    console.log(err);
     res.status(500).json({ message: connectionError });
   }
 };
@@ -234,6 +284,7 @@ export {
   registerUserController,
   forgotPasswordController,
   loginUserController,
+  socialSignInController,
   confirmPasswordCode,
   resetPassword,
   verifyEmail,

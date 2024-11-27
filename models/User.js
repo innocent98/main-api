@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     userRole: { type: String, required: true, enum: ["client", "freelancer"] },
+    signinType: { type: String,},
     isEmailVerified: { type: Boolean, default: false },
     resetCode: { type: String },
     resetCodeExpIn: { type: Date },

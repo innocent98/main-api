@@ -4,6 +4,7 @@ export interface userReg {
   email: String;
   password: String;
   userRole: String;
+  signinType: string;
 }
 
 export interface userInfo {
@@ -65,4 +66,4 @@ export type message = {
   sender: string;
   receiver: string;
   content: string;
-}
+};

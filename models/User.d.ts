@@ -13,6 +13,7 @@ type User = {
   email: string;
   password: string;
   userRole: UserRole;
+  signinType: string;
   isEmailVerified: boolean;
   resetCode?: string;
   resetCodeExpIn?: Date;
