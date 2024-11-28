@@ -3,18 +3,31 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const transport = nodemailer.createTransport({
-  port: process.env.EMAIL_PORT,
-  host: process.env.EMAIL_HOST,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
 export const confirmationEmail = async (email: String, token: String) => {
+  const transport = nodemailer.createTransport({
+    port: process.env.EMAIL_PORT,
+    host: process.env.EMAIL_HOST,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
   console.log("Check");
+
+  await new Promise((resolve, reject) => {
+    // verify connection configuration
+    transport.verify(function (error: any, success: any) {
+      if (error) {
+        console.log(error);
+        reject(error);
+      } else {
+        console.log("Server is ready to take our messages");
+        resolve(success);
+      }
+    });
+  });
 
   const message = {
     from: `"Zeal Workers Token" <${process.env.EMAIL_USER}>`,
@@ -51,9 +64,11 @@ export const confirmationEmail = async (email: String, token: String) => {
   await new Promise((resolve, reject) => {
     transport.sendMail(message, (err: any, info: any) => {
       if (err) {
-        // console.log(err);
+        console.log(err);
+        reject(err);
       } else {
         console.log("sent");
+        resolve(info);
       }
     });
   });

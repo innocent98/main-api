@@ -3,18 +3,31 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const transport = nodemailer.createTransport({
-  port: process.env.EMAIL_PORT,
-  host: process.env.EMAIL_HOST,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
 export const forgotPasswordEmail = async (email: string, code: number) => {
+  const transport = nodemailer.createTransport({
+    port: process.env.EMAIL_PORT,
+    host: process.env.EMAIL_HOST,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
   console.log("Check");
+
+  await new Promise((resolve, reject) => {
+    // verify connection configuration
+    transport.verify(function (error: any, success: any) {
+      if (error) {
+        console.log(error);
+        reject(error);
+      } else {
+        console.log("Server is ready to take our messages");
+        resolve(success);
+      }
+    });
+  });
 
   const message = {
     from: `"Zeal Workers Token" <${process.env.EMAIL_USER}>`,
@@ -40,7 +53,7 @@ export const forgotPasswordEmail = async (email: string, code: number) => {
     
       <p style="margin-bottom: 10px;">If you did not initate this, do not worry, kindly disregard this email. And remember not to share any sensitive information with anyone.</p>
     
-      <p style="margin-bottom: 10px;">If you have any questions, please don't hesitate to contact us at [Support Email Address].</p>
+      <p style="margin-bottom: 10px;">If you have any questions, please don't hesitate to contact us at support@zealworkers.com.</p>
     
       <p style="margin-bottom: 10px;">Thanks,</p>
       <p style="margin-bottom: 10px;">Zeal Workers Token Team</p>
@@ -51,9 +64,11 @@ export const forgotPasswordEmail = async (email: string, code: number) => {
   await new Promise((resolve, reject) => {
     transport.sendMail(message, (err: any, info: any) => {
       if (err) {
-        // console.log(err);
+        console.log(err);
+        reject(err);
       } else {
         console.log("sent");
+        resolve(info);
       }
     });
   });
