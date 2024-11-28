@@ -81,7 +81,11 @@ const registerUserController = async (req: any, res: any) => {
         }
       );
 
-      confirmationEmail(newUser.email, accessToken);
+      try {
+        await confirmationEmail(newUser.email, accessToken);
+      } catch (error) {
+        console.log(error);
+      }
 
       res.status(200).json({ message: accountCreated, data: others });
     }
@@ -118,7 +122,11 @@ const loginUserController = async (req: any, res: any) => {
             }
           );
 
-          confirmationEmail(findUser.email, accessToken);
+          try {
+            await confirmationEmail(findUser.email, accessToken);
+          } catch (error) {
+            console.log(error);
+          }
 
           res.status(403).json({ message: verify_email, error: "Error" });
         }
@@ -199,7 +207,11 @@ const forgotPasswordController = async (req: any, res: any) => {
       await findUser.updateOne({ $set: { resetCode: randomCode } });
       await findUser.updateOne({ $set: { resetCodeExpIn: futureTime } });
 
-      forgotPasswordEmail(findUser.email, randomCode);
+      try {
+        await forgotPasswordEmail(findUser.email, randomCode);
+      } catch (error) {
+        console.log(error);
+      }
 
       res.status(200).json({ message: forgotPassword });
     } else {
