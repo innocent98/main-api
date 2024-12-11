@@ -11,7 +11,7 @@ const newJobService = async (jobInfo: jobReg) => {
 const findJobsService = async (query: any, page: string, pageSize: number) => {
   const jobs = await Job.find(query)
     .sort({ createdAt: -1 }) // Sort in descending order
-    .select({ jobPoster: 0, status: 0, updatedAt: 0 })
+    .select({ updatedAt: 0 })
     .skip((parseInt(page) - 1) * pageSize)
     .limit(pageSize)
     .exec();

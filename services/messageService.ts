@@ -14,7 +14,11 @@ const getMessagesService = async (
 ) => {
   const messages = await Message.find(query)
     .sort({ createdAt: -1 }) // Sort in descending order
-    .select({})
+    .populate([
+      { path: "sender", select: "firstName lastName" },
+      { path: "receiver", select: "firstName lastName" },
+    ])
+    .select({ updatedAt: 0 })
     .skip((parseInt(page) - 1) * pageSize)
     .limit(pageSize)
     .exec();
@@ -25,7 +29,8 @@ const getMessagesService = async (
 const getMessagesBySenderAndReceiverService = async (
   senderId: string,
   receiverId: string,
-  page: string
+  page: string,
+  pageSize: number
 ) => {
   const messages = await Message.find({
     $or: [

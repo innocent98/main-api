@@ -4,6 +4,7 @@ import {
   findJobApplicantsController,
   findJobController,
   findJobsController,
+  findOwnJobsController,
   jobApplicationController,
   newJobController,
 } from "../controllers/jobController";
@@ -15,8 +16,13 @@ router.post("/create", verifyTokenAndAuthorization, newJobController);
 router.put("/edit/:id", verifyTokenAndAuthorization, editJobController);
 router.delete("/:id", verifyTokenAndAuthorization, deleteJobController);
 router.get("/jobs", verifyTokenAndAuthorization, findJobsController);
+router.get("/owner/jobs", verifyTokenAndAuthorization, findOwnJobsController);
 router.get("/:id", verifyTokenAndAuthorization, findJobController);
 router.put("/apply/:id", verifyTokenAndAuthorization, jobApplicationController);
-router.get("/applicants/:id", verifyTokenAndAuthorization, findJobApplicantsController);
+router.get(
+  "/applicants/:id",
+  verifyTokenAndAuthorization,
+  findJobApplicantsController
+);
 
 module.exports = router;

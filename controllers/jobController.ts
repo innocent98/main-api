@@ -182,6 +182,44 @@ const findJobController = async (req: any, res: Response) => {
   }
 };
 
+const findOwnJobsController = async (req: any, res: Response) => {
+  try {
+    const user = await findUserByIdService(req.user.id);
+
+    if (user) {
+      // Pagination parameters
+      const { query, page } = req.query;
+
+      const pageSize = 10; // Number of items to return per page
+
+      const jobs = await findJobsService(
+        { jobPoster: user.id },
+        page,
+        pageSize
+      );
+
+      const totalRecords = await Job.countDocuments({jobPoster: user.id});
+
+      const totalPages = Math.ceil(totalRecords / pageSize);
+      const currentPage = parseInt(page) || 1;
+
+      const response = {
+        totalPages,
+        currentPage,
+        length: totalRecords,
+        jobs,
+      };
+
+      res.status(200).json({ data: response });
+    } else {
+      res.status(403).json({ message: not_allowed });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: connectionError });
+  }
+};
+
 const jobApplicationController = async (req: any, res: Response) => {
   try {
     const user = await findUserByIdService(req.user.id);
@@ -237,6 +275,7 @@ export {
   newJobController,
   findJobsController,
   findJobController,
+  findOwnJobsController,
   jobApplicationController,
   editJobController,
   deleteJobController,

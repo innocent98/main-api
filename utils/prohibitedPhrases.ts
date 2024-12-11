@@ -13,6 +13,9 @@ export const prohibitedPhrases = [
   /email\s*(:)?/i,
   /phone\s*(:)?/i,
   /call\s*(:)?/i,
+  /reach\s*(:)?/i,
+  /reach out\s*(:)?/i,
+  /reach me\s*(:)?/i,
   /@/i, // matches email addresses
   /\b\d{10}\b/, // matches a 10-digit phone number
   /\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/, // matches phone numbers with formats like 123-456-7890 or 123 456 7890

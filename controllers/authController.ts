@@ -112,7 +112,9 @@ const loginUserController = async (req: any, res: any) => {
             }
           );
 
-          res.status(200).json({ data: accessToken });
+          res
+            .status(200)
+            .json({ data: accessToken, userRole: findUser.userRole });
         } else {
           const accessToken = jwt.sign(
             { id: findUser._id },

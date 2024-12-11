@@ -9,6 +9,7 @@ import {
   not_allowed,
   not_found,
   prohibited_content,
+  update_account,
 } from "../utils/messages";
 import { prohibitedPhrases } from "../utils/prohibitedPhrases";
 
@@ -19,6 +20,10 @@ const findUserController = async (req: any, res: any) => {
 
     if (user) {
       const userObject = user?.toObject() as User;
+
+      if (!user.bio) {
+        return res.status(403).json({ message: update_account });
+      }
 
       if (user.userRole === "client") {
         const {
@@ -70,7 +75,7 @@ const updateUserController = async (req: any, res: any) => {
           pattern.test(bio)
         );
         if (!isValidBio) {
-          res.status(400).json(prohibited_content);
+          res.status(400).json({ message: prohibited_content });
           return;
         }
       }

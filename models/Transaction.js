@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const TransactionSchema = new mongoose.Schema(
   {
-    user: { type: String },
-    user2: { type: String },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    user2: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     transactionType: {
       type: String,
       enum: ["withdraw", "fund", "transfer"],

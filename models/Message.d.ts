@@ -1,9 +1,11 @@
-import { Document, Model } from "mongoose";
+import { Document, Model, Types } from "mongoose";
 
 type Message = {
-  sender: string;
-  receiver: string;
+  sender: Types.ObjectId;
+  receiver: Types.ObjectId;
   content: string;
+  conversation: Types.ObjectId;
+  isRead: boolean;
 };
 
 type MessageModel = Model<Message>;

@@ -1,6 +1,6 @@
 // Job.d.ts
 
-import { Document, Model } from "mongoose";
+import { Document, Model, Types } from "mongoose";
 
 export enum Status {
   Pending = "pending",
@@ -13,7 +13,7 @@ export enum JobStatus {
 }
 
 type Job = {
-  jobPoster: string;
+  jobPoster: Types.ObjectId;
   jobCategory: string;
   // serviceType: string;
   jobTitle: string;
@@ -24,7 +24,7 @@ type Job = {
   // country: string;
   // startDate: Date;
   duration: string;
-  applicants: string[];
+  applicants: Types.ObjectId[];
   jobStatus: JobStatus;
   // status: Status;
 };

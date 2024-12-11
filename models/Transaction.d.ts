@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 
 export enum TransactionType {
   Withdraw = "withdraw",
@@ -18,8 +18,8 @@ export enum TransactionStatus {
 }
 
 type Transaction = {
-  user: string;
-  user2: string;
+  user: Types.ObjectId;
+  user2: Types.ObjectId;
   transactionType: TransactionType;
   currencyType: CurrencyType;
   transactionStatus: TransactionStatus;

@@ -35,6 +35,9 @@ export const reset_code_exps =
 
 export const not_found = "Not found";
 
+export const update_account =
+  "Please update your profile before you can proceed to your dashboard";
+
 export const account_updated = "Profile successfully updated";
 
 export const job_posted = "Job created successfully.";

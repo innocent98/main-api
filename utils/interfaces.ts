@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 export interface userReg {
   firstName: String;
   lastName: String;
@@ -23,7 +25,7 @@ export enum jobStatus {
 }
 
 export interface jobReg {
-  jobPoster: string;
+  jobPoster: Types.ObjectId;
   jobCategory: string;
   serviceType: string;
   jobTitle: string;
@@ -55,7 +57,7 @@ export enum TransactionStatus {
 }
 
 export interface transaction {
-  user: string;
+  user: Types.ObjectId;
   transactionType: TransactionType;
   currencyType: CurrencyType;
   transactionStatus: TransactionStatus;
@@ -63,7 +65,14 @@ export interface transaction {
 }
 
 export type message = {
-  sender: string;
-  receiver: string;
+  sender: Types.ObjectId;
+  receiver: Types.ObjectId;
   content: string;
+  conversation: Types.ObjectId;
+};
+
+export type conversation = {
+  participants: Types.ObjectId[];
+  lastMessage: string;
+  lastMessageSender: Types.ObjectId;
 };
