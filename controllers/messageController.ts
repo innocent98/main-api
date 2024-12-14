@@ -4,7 +4,11 @@ import {
   getMessagesService,
 } from "../services/messageService";
 import { findUserByIdService } from "../services/userService";
-import { connectionError, not_allowed } from "../utils/messages";
+import {
+  connectionError,
+  not_allowed,
+  prohibited_content,
+} from "../utils/messages";
 import {
   createConversationService,
   getConversationByIdService,
@@ -14,12 +18,25 @@ import {
 } from "../services/conversationService";
 import Conversation from "../models/Conversation";
 import Message from "../models/Message";
+import { prohibitedPhrases } from "../utils/prohibitedPhrases";
 
 const createMessageController = async (req: any, res: Response) => {
   try {
     const user = await findUserByIdService(req.user.id);
 
     if (user) {
+      const { content } = req.body;
+      // Validate the message content before creating
+      if (content) {
+        const isValidBio = !prohibitedPhrases.some((pattern) =>
+          pattern.test(content)
+        );
+        if (!isValidBio) {
+          res.status(400).json({ message: prohibited_content });
+          return;
+        }
+      }
+
       const conversation = await getConversationService({
         participants: { $all: [user.id, req.params.id] },
       });

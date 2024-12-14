@@ -21,10 +21,6 @@ const findUserController = async (req: any, res: any) => {
     if (user) {
       const userObject = user?.toObject() as User;
 
-      if (!user.bio) {
-        return res.status(403).json({ message: update_account });
-      }
-
       if (user.userRole === "client") {
         const {
           password,
@@ -36,6 +32,10 @@ const findUserController = async (req: any, res: any) => {
           myWorks,
           ...others
         } = userObject;
+
+        if (!user.companyDesc || !user.companyName) {
+          return res.status(403).json({ message: update_account });
+        }
 
         res.status(200).json({ data: others });
       } else if (user.userRole === "freelancer") {
@@ -50,6 +50,10 @@ const findUserController = async (req: any, res: any) => {
           companyName,
           ...others
         } = userObject;
+
+        if (!user.bio) {
+          return res.status(403).json({ message: update_account });
+        }
 
         res.status(200).json({ data: others });
       }
