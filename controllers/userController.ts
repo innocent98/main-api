@@ -65,6 +65,55 @@ const findUserController = async (req: any, res: any) => {
   }
 };
 
+// get other user profile
+const findUserProfileController = async (req: any, res: any) => {
+  try {
+    const user = await findUserByIdService(req.user.id);
+
+    if (user) {
+      const userProfile = await findUserByIdService(req.params.id);
+      const userObject = userProfile?.toObject() as User;
+
+      if (userProfile) {
+        if (userProfile.userRole === "client") {
+          const {
+            password,
+            resetCode,
+            resetCodeExpIn,
+            skills,
+            photo,
+            hourRate,
+            myWorks,
+            ...others
+          } = userObject;
+
+          res.status(200).json({ data: others });
+        } else if (userProfile.userRole === "freelancer") {
+          const {
+            password,
+            resetCode,
+            resetCodeExpIn,
+            companyDesc,
+            companyInterests,
+            companyLinks,
+            companyLogo,
+            companyName,
+            ...others
+          } = userObject;
+
+          res.status(200).json({ data: others });
+        }
+      } else {
+        res.status(404).json({ data: not_found });
+      }
+    } else {
+      res.status(404).json({ message: not_found });
+    }
+  } catch (err) {
+    res.status(500).json({ message: connectionError });
+  }
+};
+
 // edit/update a user profile
 const updateUserController = async (req: any, res: any) => {
   try {
@@ -123,4 +172,4 @@ const updateUserController = async (req: any, res: any) => {
   }
 };
 
-export { findUserController, updateUserController };
+export { findUserController, updateUserController, findUserProfileController };
