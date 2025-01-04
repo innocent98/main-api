@@ -1,3 +1,4 @@
+import { Response } from "express";
 import User from "../models/User";
 import {
   findUserAndUpdate,
@@ -6,12 +7,15 @@ import {
 import {
   account_updated,
   connectionError,
+  incorrect_password,
   not_allowed,
   not_found,
   prohibited_content,
   update_account,
 } from "../utils/messages";
 import { prohibitedPhrases } from "../utils/prohibitedPhrases";
+import bcrypt from "bcrypt";
+import { message } from "../utils/interfaces";
 
 // get user self account/profile
 const findUserController = async (req: any, res: any) => {
@@ -66,7 +70,7 @@ const findUserController = async (req: any, res: any) => {
 };
 
 // get other user profile
-const findUserProfileController = async (req: any, res: any) => {
+const findUserProfileController = async (req: any, res: Response) => {
   try {
     const user = await findUserByIdService(req.user.id);
 
@@ -115,7 +119,7 @@ const findUserProfileController = async (req: any, res: any) => {
 };
 
 // edit/update a user profile
-const updateUserController = async (req: any, res: any) => {
+const updateUserController = async (req: any, res: Response) => {
   try {
     const user = await findUserByIdService(req.user.id);
 
@@ -172,4 +176,35 @@ const updateUserController = async (req: any, res: any) => {
   }
 };
 
-export { findUserController, updateUserController, findUserProfileController };
+const updateUserPasswordController = async (req: any, res: Response) => {
+  try {
+    const user = await findUserByIdService(req.user.id);
+    const { currentPassword, password } = req.body;
+
+    if (user) {
+      if (await bcrypt.compare(currentPassword, user.password)) {
+        // encrypt password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        await findUserAndUpdate(user.id, { password: hashedPassword });
+
+        res.status(200).json({ message: account_updated });
+      } else {
+        res.status(400).json({ message: incorrect_password });
+      }
+    } else {
+      res.status(403).json({ message: not_allowed });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: connectionError });
+  }
+};
+
+export {
+  findUserController,
+  updateUserController,
+  findUserProfileController,
+  updateUserPasswordController,
+};

@@ -63,3 +63,5 @@ export const job_applied = "You have successfully applied for this job.";
 export const unknown_transaction_type = "Unknown transaction type";
 
 export const unknown_currency_type = "Unknown currency type";
+
+export const incorrect_password = "The password you entered is incorrect with the existing password, please try again."

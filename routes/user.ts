@@ -2,6 +2,7 @@ import {
   findUserController,
   findUserProfileController,
   updateUserController,
+  updateUserPasswordController,
 } from "../controllers/userController";
 import { verifyTokenAndAuthorization } from "../utils/jwt";
 
@@ -14,6 +15,11 @@ router.put(
   "/profile/update",
   verifyTokenAndAuthorization,
   updateUserController
+);
+router.put(
+  "/password/update",
+  verifyTokenAndAuthorization,
+  updateUserPasswordController
 );
 
 module.exports = router;
