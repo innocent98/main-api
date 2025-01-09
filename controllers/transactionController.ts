@@ -42,7 +42,7 @@ const fundBalanceFunction = async (
 ) => {
   const newTransaction = await fundBalanceService({
     user: user.id,
-    user2: transferTo ? transferTo.id : "",
+    user2: transferTo ? transferTo.id : null,
     transactionStatus:
       req.body.transactionType === "withdraw" ? "pending" : "completed",
     ...req.body,
@@ -123,7 +123,7 @@ const fundBalanceController = async (req: any, res: any) => {
 
       if (req.body.transactionType === "transfer") {
         const transferTo = await findUserByIdService(req.query.transferTo);
-        console.log(transferTo);
+        // console.log(transferTo);
 
         if (transferTo) {
           return fundBalanceFunction(user, transferTo, req, res);
