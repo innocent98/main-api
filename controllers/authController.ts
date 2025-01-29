@@ -160,9 +160,11 @@ const socialSignInController = async (req: any, res: Response) => {
           }
         );
 
-        res
-          .status(200)
-          .json({ data: accessToken, userRole: findUser.userRole });
+        res.status(200).json({
+          message: "Login successful",
+          data: accessToken,
+          userRole: findUser.userRole,
+        });
       } else {
         const newUser = await registerUserService({
           firstName: req.body.firstName,
@@ -171,6 +173,7 @@ const socialSignInController = async (req: any, res: Response) => {
           password: "social",
           userRole: req.body.userRole,
           signinType: type,
+          isEmailVerified: true,
         });
 
         const accessToken = jwt.sign(
@@ -181,7 +184,11 @@ const socialSignInController = async (req: any, res: Response) => {
           }
         );
 
-        res.status(200).json({ data: accessToken, userRole: newUser.userRole });
+        res.status(200).json({
+          message: "Registration successful",
+          data: accessToken,
+          userRole: newUser.userRole,
+        });
       }
     } else {
       res.status(400).json({ message: not_allowed });

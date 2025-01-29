@@ -7,6 +7,7 @@ export interface userReg {
   password: String;
   userRole: String;
   signinType: string;
+  isEmailVerified?: boolean;
 }
 
 export interface userInfo {
