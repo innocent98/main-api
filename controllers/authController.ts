@@ -160,7 +160,9 @@ const socialSignInController = async (req: any, res: Response) => {
           }
         );
 
-        res.status(200).json({ data: accessToken });
+        res
+          .status(200)
+          .json({ data: accessToken, userRole: findUser.userRole });
       } else {
         const newUser = await registerUserService({
           firstName: req.body.firstName,
@@ -179,7 +181,7 @@ const socialSignInController = async (req: any, res: Response) => {
           }
         );
 
-        res.status(200).json({ data: accessToken });
+        res.status(200).json({ data: accessToken, userRole: newUser.userRole });
       }
     } else {
       res.status(400).json({ message: not_allowed });
